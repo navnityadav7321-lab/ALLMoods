@@ -3,131 +3,169 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#17123c">
-<title>ALLMoods | Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#100d25">
+<title>ALLMoods</title>
 
 <style>
 *{box-sizing:border-box}
 body{
-  margin:0;min-height:100vh;padding:20px;
-  display:grid;place-items:center;
+  margin:0;min-height:100vh;padding:20px 14px;
+  display:flex;align-items:center;justify-content:center;
   font-family:Arial,sans-serif;color:white;
-  background:linear-gradient(135deg,#17123c,#482575,#087d8a);
-  overflow-x:hidden
+  background:linear-gradient(135deg,#100d25,#39205c,#092b48);
+  background-size:200% 200%;animation:bg 12s infinite alternate;
 }
-body:before,body:after{
-  content:"";position:fixed;width:260px;height:260px;
-  border-radius:50%;filter:blur(65px);opacity:.4;
-  animation:float 8s ease-in-out infinite alternate;pointer-events:none
-}
-body:before{background:#e14cff;top:5%;left:-100px}
-body:after{background:#00e5c0;bottom:0;right:-100px;animation-delay:-4s}
-@keyframes float{to{transform:translate(35px,45px) scale(1.2)}}
+@keyframes bg{to{background-position:100% 100%}}
 .card{
-  position:relative;width:100%;max-width:420px;padding:28px;
-  border:1px solid #ffffff40;border-radius:26px;
-  background:#ffffff18;backdrop-filter:blur(22px);
-  -webkit-backdrop-filter:blur(22px);
-  box-shadow:0 25px 70px #0005;
-  animation:appear .6s ease
+  width:100%;max-width:430px;padding:26px 20px;
+  border:1px solid #ffffff35;border-radius:25px;
+  background:#ffffff12;backdrop-filter:blur(18px);
+  box-shadow:0 20px 60px #0005;
 }
-@keyframes appear{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
-.logo{text-align:center;font-size:34px;font-weight:900;letter-spacing:2px}
-.tagline{text-align:center;color:#e4e1ff;margin:8px 0 25px}
-input,button{
-  display:block;width:100%;padding:14px;margin:10px 0;
-  border-radius:13px;font-size:15px
+.logo{
+  width:68px;height:68px;margin:0 auto 12px;
+  display:grid;place-items:center;border-radius:22px;
+  background:linear-gradient(135deg,#a855f7,#ec4899,#fb923c);
+  font-size:34px;font-weight:bold;
 }
-input{
-  color:white;background:#ffffff12;
-  border:1px solid #ffffff55;outline:none
+h1{text-align:center;font-size:30px;margin:5px 0}
+.subtitle{text-align:center;color:#d9cbed;font-size:13px;margin:8px 0 24px}
+.tabs{display:flex;gap:8px;margin-bottom:18px}
+.tab{
+  flex:1;padding:12px 5px;border:1px solid #ffffff30;
+  border-radius:12px;background:#ffffff0b;color:white;
 }
-input:focus{border-color:#75f0ff;box-shadow:0 0 0 2px #75f0ff20}
-input::placeholder{color:#e2def0}
-button{
-  border:0;background:white;color:#292052;
-  font-weight:bold;cursor:pointer;transition:.2s
+.tab.active,.main-btn{
+  background:linear-gradient(100deg,#9333ea,#db2777,#f97316);
+  color:white;border:0;
 }
-button:hover{transform:translateY(-2px)}
-button:disabled{opacity:.6;cursor:wait}
-.secondary{background:#ffffff18;color:white;border:1px solid #ffffff50}
-a{color:#fff;cursor:pointer;text-decoration:underline}
-.small{text-align:center;font-size:13px}
-.or{text-align:center;color:#ded8f8;font-size:13px;margin:17px 0}
-#app,#otpArea{display:none}
-#message{font-size:13px;text-align:center;line-height:1.5;overflow-wrap:anywhere;min-height:20px}
-hr{border:0;border-top:1px solid #ffffff35;margin:22px 0}
-.welcome{text-align:center;padding:15px 0}
-.avatar{font-size:50px;margin:15px}
-#recaptcha-container{margin:12px 0;overflow:hidden}
+.field-label{display:block;font-size:13px;margin:13px 0 7px}
+input,select{
+  width:100%;min-width:0;padding:13px 11px;
+  border:1px solid #ffffff30;border-radius:12px;
+  color:white;background:#ffffff0c;font-size:14px;outline:none;
+}
+input::placeholder{color:#c8bed8}
+select option{background:#211737;color:white}
+input:focus,select:focus{border-color:#d8b4fe}
+.phone-row{display:flex;gap:8px}
+.phone-row select{flex:0 0 46%;font-size:12px;padding:12px 5px}
+.phone-row input{flex:1;width:54%}
+.main-btn,.google-btn{
+  width:100%;padding:14px 10px;margin-top:15px;
+  border-radius:12px;font-size:14px;font-weight:bold;cursor:pointer;
+}
+.google-btn{background:#ffffff10;border:1px solid #ffffff30;color:white}
+button:disabled{opacity:.6}
+.forgot{
+  display:block;text-align:right;margin-top:12px;
+  color:#e9b8ff;font-size:13px;cursor:pointer
+}
+.divider{text-align:center;color:#cfc5e1;font-size:12px;margin:16px 0}
+.message{
+  display:none;margin-top:14px;padding:11px;border-radius:10px;
+  background:#ffffff15;font-size:13px;line-height:1.5;overflow-wrap:anywhere
+}
+.message.show{display:block}
+.small{text-align:center;color:#cfc5e1;font-size:11px;line-height:1.6;margin-top:20px}
+.hidden{display:none!important}
+#recaptcha-container{margin-top:12px;display:flex;justify-content:center;overflow:hidden}
 </style>
 </head>
 
 <body>
-<div class="card">
-  <div class="logo">ALLMoods</div>
-  <div class="tagline">Your mood. Your people. ✨</div>
+<main class="card">
+  <div class="logo">A</div>
+  <h1>ALLMoods</h1>
+  <p class="subtitle">Your mood. Your people. Your world.</p>
 
-  <section id="loginArea">
-    <input id="email" type="email" autocomplete="email"
-      placeholder="Email address">
-    <input id="password" type="password" autocomplete="current-password"
-      placeholder="Password">
-
-    <button id="loginBtn">Login with Email</button>
-    <button id="signupBtn" class="secondary">Create New Account</button>
-    <button id="googleBtn" class="secondary">🌐 Continue with Google</button>
-
-    <p class="small"><a id="forgotBtn">Forgot Password?</a></p>
-
-    <hr>
-    <p class="small">Login with your phone number</p>
-    <input id="phone" type="tel" autocomplete="tel"
-      placeholder="Phone number, e.g. +919876543210">
-
-    <div id="recaptcha-container"></div>
-    <button id="otpBtn" class="secondary">Send OTP</button>
-
-    <div id="otpArea">
-      <input id="otp" type="text" inputmode="numeric"
-        autocomplete="one-time-code" placeholder="Enter SMS OTP">
-      <button id="verifyBtn">Verify OTP</button>
+  <section id="authSection">
+    <div class="tabs">
+      <button type="button" class="tab active" id="emailTab">Email Login</button>
+      <button type="button" class="tab" id="phoneTab">Phone OTP</button>
     </div>
+
+    <form id="emailForm">
+      <label class="field-label" for="email">Email address</label>
+      <input id="email" type="email" placeholder="Enter email"
+             autocomplete="email" required>
+
+      <label class="field-label" for="password">Password</label>
+      <input id="password" type="password" placeholder="Enter password"
+             autocomplete="current-password" required>
+
+      <span class="forgot" id="forgotBtn">Forgot password?</span>
+
+      <button class="main-btn" id="emailBtn" type="submit">Login</button>
+      <button class="google-btn" id="googleBtn" type="button">
+        🌐 Continue with Google
+      </button>
+      <p class="divider">OR</p>
+      <button class="main-btn" id="createBtn" type="button">
+        Create New Account
+      </button>
+    </form>
+
+    <form id="phoneForm" class="hidden">
+      <label class="field-label" for="phone">Mobile number</label>
+
+      <div class="phone-row">
+        <select id="countryCode" aria-label="Country code">
+          <option value="+91" selected>🇮🇳 India (+91)</option>
+          <option value="+1">🇺🇸 USA (+1)</option>
+          <option value="+44">🇬🇧 UK (+44)</option>
+          <option value="+971">🇦🇪 UAE (+971)</option>
+          <option value="+61">🇦🇺 Australia (+61)</option>
+          <option value="+977">🇳🇵 Nepal (+977)</option>
+          <option value="+880">🇧🇩 Bangladesh (+880)</option>
+          <option value="+94">🇱🇰 Sri Lanka (+94)</option>
+          <option value="+92">🇵🇰 Pakistan (+92)</option>
+          <option value="+86">🇨🇳 China (+86)</option>
+        </select>
+        <input id="phone" type="tel" inputmode="numeric"
+               autocomplete="tel-national" placeholder="Mobile number"
+               maxlength="15" required>
+      </div>
+
+      <div id="recaptcha-container"></div>
+      <button class="main-btn" id="otpBtn" type="button">Send OTP</button>
+
+      <div id="otpSection" class="hidden">
+        <label class="field-label" for="otp">Enter OTP</label>
+        <input id="otp" type="text" inputmode="numeric"
+               autocomplete="one-time-code" maxlength="6"
+               placeholder="6-digit OTP">
+        <button class="main-btn" id="verifyBtn" type="button">
+          Verify OTP & Login
+        </button>
+      </div>
+    </form>
+
+    <div id="message" class="message" role="status" aria-live="polite"></div>
+    <p class="small">Welcome to ALLMoods. Connect and share your moments.</p>
   </section>
 
-  <section id="app">
-    <div class="welcome">
-      <div class="avatar">🎉</div>
-      <h2>Welcome to ALLMoods!</h2>
-      <p id="userInfo"></p>
-      <button id="logoutBtn">Logout</button>
-    </div>
+  <section id="welcomeSection" class="hidden">
+    <h2 style="text-align:center">Welcome to ALLMoods! 🎉</h2>
+    <p id="userInfo" style="text-align:center;margin-top:15px;overflow-wrap:anywhere"></p>
+    <button class="main-btn" id="logoutBtn" type="button">Logout</button>
   </section>
-
-  <div id="message" role="status" aria-live="polite"></div>
-</div>
+</main>
 
 <script type="module">
 import { initializeApp } from
   "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
 import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithPopup,
-  signInWithRedirect,
-  getRedirectResult,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  sendPasswordResetEmail,
-  signOut,
-  RecaptchaVerifier,
-  signInWithPhoneNumber
+  getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect,
+  getRedirectResult, createUserWithEmailAndPassword,
+  signInWithEmailAndPassword, sendPasswordResetEmail,
+  RecaptchaVerifier, signInWithPhoneNumber,
+  onAuthStateChanged, signOut
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
-// ALLMOODS FIREBASE CONFIG
+/* YOUR FIREBASE CONFIG */
 const firebaseConfig = {
   apiKey: "AIzaSyAIMEmlXMTDH0NTvda3_sIS3D_KOc6Ogmk",
   authDomain: "allmoods-621a2.firebaseapp.com",
@@ -138,198 +176,227 @@ const firebaseConfig = {
   measurementId: "G-WJMFT93HTQ"
 };
 
-const firebaseApp = initializeApp(firebaseConfig);
-const auth = getAuth(firebaseApp);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
-
 const $ = id => document.getElementById(id);
-const showMessage = text => { $("message").textContent = text; };
 
 let confirmationResult = null;
 let recaptchaVerifier = null;
 let recaptchaWidgetId = null;
 
-onAuthStateChanged(auth, user => {
-  $("loginArea").style.display = user ? "none" : "block";
-  $("app").style.display = user ? "block" : "none";
+function message(text) {
+  $("message").textContent = text;
+  $("message").classList.add("show");
+}
+function clearMessage() {
+  $("message").textContent = "";
+  $("message").classList.remove("show");
+}
+function busy(button, yes, label = "Please wait...") {
+  if (yes) {
+    button.dataset.oldText = button.textContent;
+    button.textContent = label;
+    button.disabled = true;
+  } else {
+    button.disabled = false;
+    if (button.dataset.oldText) button.textContent = button.dataset.oldText;
+  }
+}
 
-  $("userInfo").textContent = user
-    ? (user.displayName || user.email || user.phoneNumber || "Signed in")
-    : "";
+onAuthStateChanged(auth, user => {
+  if (user) {
+    $("authSection").classList.add("hidden");
+    $("welcomeSection").classList.remove("hidden");
+    $("userInfo").textContent =
+      "Signed in as: " + (user.email || user.phoneNumber || "ALLMoods user");
+  } else {
+    $("welcomeSection").classList.add("hidden");
+    $("authSection").classList.remove("hidden");
+  }
 });
 
 try {
   await getRedirectResult(auth);
 } catch (error) {
-  showMessage("Google login: " + error.message);
+  message("Google login error: " + error.message);
 }
 
-// EMAIL LOGIN
-$("loginBtn").addEventListener("click", async () => {
-  const email = $("email").value.trim();
-  const password = $("password").value;
+$("emailTab").onclick = () => {
+  clearMessage();
+  $("emailTab").classList.add("active");
+  $("phoneTab").classList.remove("active");
+  $("emailForm").classList.remove("hidden");
+  $("phoneForm").classList.add("hidden");
+};
 
-  if (!email || !password) {
-    showMessage("Email aur password dono bharo.");
-    return;
-  }
+$("phoneTab").onclick = () => {
+  clearMessage();
+  $("phoneTab").classList.add("active");
+  $("emailTab").classList.remove("active");
+  $("phoneForm").classList.remove("hidden");
+  $("emailForm").classList.add("hidden");
+};
 
+$("emailForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  clearMessage();
+  const button = $("emailBtn");
+  busy(button, true, "Logging in...");
   try {
-    showMessage("Logging in...");
-    await signInWithEmailAndPassword(auth, email, password);
-    showMessage("Login successful!");
+    await signInWithEmailAndPassword(
+      auth, $("email").value.trim(), $("password").value
+    );
+    message("Login successful!");
   } catch (error) {
-    showMessage(error.message);
+    message("Login failed: " + error.message);
+  } finally {
+    busy(button, false);
   }
 });
 
-// CREATE ACCOUNT
-$("signupBtn").addEventListener("click", async () => {
+$("createBtn").onclick = async () => {
+  clearMessage();
   const email = $("email").value.trim();
   const password = $("password").value;
 
   if (!email || !password) {
-    showMessage("Email aur password dono bharo.");
+    message("Pehle email aur password enter karo.");
     return;
   }
-
   if (password.length < 6) {
-    showMessage("Password kam se kam 6 characters ka rakho.");
+    message("Password kam se kam 6 characters ka hona chahiye.");
     return;
   }
 
+  busy($("createBtn"), true, "Creating account...");
   try {
-    showMessage("Creating account...");
     await createUserWithEmailAndPassword(auth, email, password);
-    showMessage("Account created successfully!");
+    message("Account created successfully!");
   } catch (error) {
-    showMessage(error.message);
+    message("Account error: " + error.message);
+  } finally {
+    busy($("createBtn"), false);
   }
-});
+};
 
-// FORGOT PASSWORD
-$("forgotBtn").addEventListener("click", async () => {
+$("forgotBtn").onclick = async () => {
+  clearMessage();
   const email = $("email").value.trim();
-
   if (!email) {
-    showMessage("Pehle email address bharo.");
-    $("email").focus();
+    message("Password reset ke liye pehle email enter karo.");
     return;
   }
-
   try {
     await sendPasswordResetEmail(auth, email);
-    showMessage("Agar account is email se registered hai, reset instructions bhej di gayi hain. Inbox check karo.");
+    message("Agar email account registered hai, password reset link bhej diya gaya hai.");
   } catch (error) {
-    showMessage(error.message);
+    message("Reset error: " + error.message);
   }
-});
+};
 
-// GOOGLE LOGIN
-$("googleBtn").addEventListener("click", async () => {
+$("googleBtn").onclick = async () => {
+  clearMessage();
+  busy($("googleBtn"), true, "Connecting to Google...");
   try {
-    showMessage("Google login khol rahe hain...");
     await signInWithPopup(auth, googleProvider);
+    message("Google login successful!");
   } catch (error) {
-    if (
-      error.code === "auth/popup-blocked" ||
-      error.code === "auth/operation-not-supported-in-this-environment"
-    ) {
+    if (error.code === "auth/popup-blocked") {
       try {
         await signInWithRedirect(auth, googleProvider);
+        return;
       } catch (redirectError) {
-        showMessage(redirectError.message);
+        message("Google login error: " + redirectError.message);
       }
     } else {
-      showMessage(error.message);
+      message("Google login error: " + error.message);
     }
+  } finally {
+    busy($("googleBtn"), false);
   }
-});
+};
 
-// PHONE OTP: reCAPTCHA
 async function setupRecaptcha() {
   if (recaptchaVerifier) return;
-
   recaptchaVerifier = new RecaptchaVerifier(auth, "recaptcha-container", {
     size: "normal",
-    callback: () => {
-      showMessage("Verification complete. Send OTP dabao.");
-    },
+    callback: () => {},
     "expired-callback": () => {
-      showMessage("reCAPTCHA expire ho gaya. Dobara verify karo.");
+      message("reCAPTCHA expire ho gaya. Dobara verify karo.");
     }
   });
-
   recaptchaWidgetId = await recaptchaVerifier.render();
 }
 
-// SEND PHONE OTP
-$("otpBtn").addEventListener("click", async () => {
-  const phone = $("phone").value.trim();
+$("otpBtn").onclick = async () => {
+  clearMessage();
+  const digits = $("phone").value.replace(/\D/g, "");
+  const countryCode = $("countryCode").value;
 
-  if (!/^\+[1-9]\d{7,14}$/.test(phone)) {
-    showMessage("Country code ke saath number likho, jaise +919876543210.");
+  if (!/^\d{6,12}$/.test(digits)) {
+    message("Sahi mobile number enter karo.");
     return;
   }
 
+  const phoneNumber = countryCode + digits;
+  busy($("otpBtn"), true, "Sending OTP...");
+
   try {
-    $("otpBtn").disabled = true;
-    showMessage("Phone verification taiyar ho rahi hai...");
-
     await setupRecaptcha();
-
     confirmationResult = await signInWithPhoneNumber(
-      auth,
-      phone,
-      recaptchaVerifier
+      auth, phoneNumber, recaptchaVerifier
     );
-
-    $("otpArea").style.display = "block";
-    showMessage("OTP bhej diya gaya hai. SMS check karo.");
+    $("otpSection").classList.remove("hidden");
+    message("OTP bhej diya gaya hai. SMS check karo.");
   } catch (error) {
-    showMessage("OTP nahi bhej paye: " + error.message);
-
+    message("OTP error: " + error.message);
     if (recaptchaVerifier) {
-      try { await recaptchaVerifier.clear(); } catch {}
+      try { recaptchaVerifier.clear(); } catch (_) {}
       recaptchaVerifier = null;
       recaptchaWidgetId = null;
+      $("recaptcha-container").innerHTML = "";
     }
   } finally {
-    $("otpBtn").disabled = false;
+    busy($("otpBtn"), false);
   }
-});
+};
 
-// VERIFY OTP
-$("verifyBtn").addEventListener("click", async () => {
+$("verifyBtn").onclick = async () => {
+  clearMessage();
   const code = $("otp").value.trim();
 
   if (!confirmationResult) {
-    showMessage("Pehle Send OTP dabao.");
+    message("Pehle Send OTP dabao.");
+    return;
+  }
+  if (!/^\d{6}$/.test(code)) {
+    message("6-digit OTP enter karo.");
     return;
   }
 
-  if (!code) {
-    showMessage("SMS mein mila OTP enter karo.");
-    return;
-  }
-
+  busy($("verifyBtn"), true, "Verifying...");
   try {
     await confirmationResult.confirm(code);
-    showMessage("Phone verified! Login successful.");
+    message("Phone verified. Login successful!");
   } catch (error) {
-    showMessage("OTP verify nahi hua: " + error.message);
+    message("OTP verification error: " + error.message);
+  } finally {
+    busy($("verifyBtn"), false);
   }
-});
+};
 
-// LOGOUT
-$("logoutBtn").addEventListener("click", async () => {
+$("logoutBtn").onclick = async () => {
   try {
     await signOut(auth);
-    showMessage("You have logged out.");
+    confirmationResult = null;
+    $("otpSection").classList.add("hidden");
+    $("otp").value = "";
+    message("You have logged out.");
   } catch (error) {
-    showMessage(error.message);
+    message("Logout error: " + error.message);
   }
-});
+};
 </script>
 </body>
 </html>
