@@ -3,394 +3,333 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ALLMoods</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#17123c">
+<title>ALLMoods | Login</title>
+
 <style>
-:root{
- --pink:#ff5ac8;
- --purple:#8b5cff;
- --cyan:#54edff;
- --glass:rgba(255,255,255,.09);
-}
 *{box-sizing:border-box}
 body{
- margin:0;min-height:100vh;color:white;
- font-family:Arial,sans-serif;
- background:linear-gradient(135deg,#100a24,#32134e,#102e49);
- background-attachment:fixed;
- padding-bottom:100px;overflow-x:hidden
+  margin:0;min-height:100vh;padding:20px;
+  display:grid;place-items:center;
+  font-family:Arial,sans-serif;color:white;
+  background:linear-gradient(135deg,#17123c,#482575,#087d8a);
+  overflow-x:hidden
 }
 body:before,body:after{
- content:"";position:fixed;width:260px;height:260px;
- border-radius:50%;filter:blur(65px);opacity:.35;
- pointer-events:none;z-index:-1;
- animation:liquid 9s ease-in-out infinite alternate
+  content:"";position:fixed;width:260px;height:260px;
+  border-radius:50%;filter:blur(65px);opacity:.4;
+  animation:float 8s ease-in-out infinite alternate;pointer-events:none
 }
-body:before{background:#a02dff;top:10%;left:-100px}
-body:after{background:#ff3bb8;right:-100px;bottom:10%;animation-delay:-4s}
-@keyframes liquid{
- 0%{transform:translate(0,0) scale(1)}
- 50%{transform:translate(70px,45px) scale(1.25)}
- 100%{transform:translate(-25px,80px) scale(.9)}
-}
-header{
- display:flex;align-items:center;justify-content:space-between;
- padding:16px;position:sticky;top:0;z-index:5;
- background:rgba(18,10,39,.58);
- backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
- border-bottom:1px solid #ffffff18
-}
-.logo{
- font-size:25px;font-weight:900;
- background:linear-gradient(90deg,var(--pink),var(--cyan));
- color:transparent;background-clip:text
-}
-button,input,select,textarea{font:inherit}
-button{
- border:1px solid #ffffff18;border-radius:14px;padding:12px;
- color:white;cursor:pointer;
- background:linear-gradient(110deg,#8c62ff,#e951c4);
- transition:transform .25s,filter .25s
-}
-button:active{transform:scale(.94)}
-input,select,textarea{
- width:100%;padding:13px;margin:6px 0;
- color:white;background:#21183c;border:1px solid #ffffff28;
- border-radius:13px;outline:none
-}
-.page{display:none;max-width:620px;margin:auto}
-.page.active{display:block;animation:pageIn .4s ease}
-@keyframes pageIn{
- from{opacity:0;transform:translateY(12px);filter:blur(4px)}
- to{opacity:1;transform:translateY(0);filter:blur(0)}
-}
+body:before{background:#e14cff;top:5%;left:-100px}
+body:after{background:#00e5c0;bottom:0;right:-100px;animation-delay:-4s}
+@keyframes float{to{transform:translate(35px,45px) scale(1.2)}}
 .card{
- margin:15px;padding:20px;border-radius:25px;
- background:var(--glass);border:1px solid #ffffff25;
- backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
- box-shadow:0 12px 35px #0002
+  position:relative;width:100%;max-width:420px;padding:28px;
+  border:1px solid #ffffff40;border-radius:26px;
+  background:#ffffff18;backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+  box-shadow:0 25px 70px #0005;
+  animation:appear .6s ease
 }
-h1{font-size:30px}
-.muted{color:#c8bedb;font-size:14px}
-.full{width:100%;margin-top:8px}
-.google{background:#fff;color:#241b36}
-.media{width:100%;border-radius:16px;margin-top:10px}
-.row{display:flex;gap:8px}
-.row>*{min-width:0}
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.actions button{flex:1}
-small{color:#c8bedb}
-.hidden{display:none!important}
-
-/* Animated glass bottom navigation */
-nav{
- display:none;position:fixed;z-index:20;
- bottom:calc(10px + env(safe-area-inset-bottom));
- left:10px;right:10px;max-width:620px;margin:auto;
- padding:8px 5px;border-radius:25px;
- background:rgba(25,17,48,.67);
- border:1px solid rgba(255,255,255,.23);
- box-shadow:0 12px 40px #0005, inset 0 1px #ffffff18;
- backdrop-filter:blur(28px) saturate(160%);
- -webkit-backdrop-filter:blur(28px) saturate(160%);
- justify-content:space-around;align-items:center;gap:3px
+@keyframes appear{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+.logo{text-align:center;font-size:34px;font-weight:900;letter-spacing:2px}
+.tagline{text-align:center;color:#e4e1ff;margin:8px 0 25px}
+input,button{
+  display:block;width:100%;padding:14px;margin:10px 0;
+  border-radius:13px;font-size:15px
 }
-nav.visible{display:flex;animation:navIn .5s cubic-bezier(.2,.8,.2,1)}
-@keyframes navIn{
- from{opacity:0;transform:translateY(35px) scale(.96)}
- to{opacity:1;transform:translateY(0) scale(1)}
+input{
+  color:white;background:#ffffff12;
+  border:1px solid #ffffff55;outline:none
 }
-nav button{
- position:relative;isolation:isolate;flex:1;min-width:0;
- display:flex;flex-direction:column;align-items:center;
- justify-content:center;gap:4px;padding:9px 2px;
- border:0;background:transparent;border-radius:18px;
- font-size:10px;color:#d5cbe9;overflow:hidden
+input:focus{border-color:#75f0ff;box-shadow:0 0 0 2px #75f0ff20}
+input::placeholder{color:#e2def0}
+button{
+  border:0;background:white;color:#292052;
+  font-weight:bold;cursor:pointer;transition:.2s
 }
-nav button .ico{font-size:20px;line-height:1.1;transition:transform .3s}
-nav button.selected{color:white}
-nav button.selected:before{
- content:"";position:absolute;inset:0;z-index:-1;border-radius:17px;
- background:linear-gradient(135deg,#a16bff88,#ff59c755,#54edff35);
- border:1px solid #ffffff28;
- box-shadow:inset 0 1px #ffffff22,0 0 20px #a45aff20;
- animation:glassPulse 2.8s ease-in-out infinite
-}
-nav button.selected .ico{transform:translateY(-2px) scale(1.12)}
-@keyframes glassPulse{
- 0%,100%{filter:brightness(1)}
- 50%{filter:brightness(1.25)}
-}
-@media(prefers-reduced-motion:reduce){
- *,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}
-}
+button:hover{transform:translateY(-2px)}
+button:disabled{opacity:.6;cursor:wait}
+.secondary{background:#ffffff18;color:white;border:1px solid #ffffff50}
+a{color:#fff;cursor:pointer;text-decoration:underline}
+.small{text-align:center;font-size:13px}
+.or{text-align:center;color:#ded8f8;font-size:13px;margin:17px 0}
+#app,#otpArea{display:none}
+#message{font-size:13px;text-align:center;line-height:1.5;overflow-wrap:anywhere;min-height:20px}
+hr{border:0;border-top:1px solid #ffffff35;margin:22px 0}
+.welcome{text-align:center;padding:15px 0}
+.avatar{font-size:50px;margin:15px}
+#recaptcha-container{margin:12px 0;overflow:hidden}
 </style>
 </head>
+
 <body>
-<header>
- <div class="logo">✦ ALLMoods</div>
- <select id="language" style="width:112px" onchange="changeLanguage()">
-  <option value="en">English</option>
-  <option value="hi">हिन्दी</option>
-  <option value="mix">Hinglish</option>
- </select>
-</header>
+<div class="card">
+  <div class="logo">ALLMoods</div>
+  <div class="tagline">Your mood. Your people. ✨</div>
 
-<section id="login" class="page active">
- <div class="card">
-  <h1 id="welcome">Every mood.<br>One beautiful place.</h1>
-  <p class="muted">Your world, your mood, your people ✨</p>
-  <button class="full google" onclick="googleLogin()">🌐 Continue with Google</button>
-  <p style="text-align:center">— OR CONTINUE WITH PHONE —</p>
-  <div class="row">
-   <select id="country" style="width:42%">
-    <option value="+91">🇮🇳 +91</option>
-    <option value="+1">🇺🇸 +1</option>
-    <option value="+44">🇬🇧 +44</option>
-    <option value="+971">🇦🇪 +971</option>
-   </select>
-   <input id="phone" type="tel" placeholder="Phone number">
-  </div>
-  <input id="email" type="email" placeholder="Email address">
-  <input id="password" type="password" placeholder="Password">
-  <button class="full" onclick="login()">Login</button>
-  <button class="full" onclick="signup()">Create Account / Sign Up</button>
-  <button class="full" style="background:#ffffff18" onclick="forgotPassword()">Forgot Password?</button>
-  <p id="authMessage" class="muted"></p>
-  <small>Demo authentication. Real accounts require secure authentication setup.</small>
- </div>
-</section>
+  <section id="loginArea">
+    <input id="email" type="email" autocomplete="email"
+      placeholder="Email address">
+    <input id="password" type="password" autocomplete="current-password"
+      placeholder="Password">
 
-<section id="home" class="page">
- <div class="card">
-  <h1>✨ Your mood, your world</h1>
-  <p class="muted">Share a little happiness today.</p>
-  <button onclick="show('create')">＋ Create Post</button>
- </div>
- <div id="feed">
-  <div class="card">
-   <strong>🌈 ALLMoods Community</strong>
-   <p>Every day is a new mood. Share yours! ✨</p>
-   <div class="actions">
-    <button onclick="like(this)">♡ Like</button>
-    <button onclick="comment(this)">💬 Comment</button>
-    <button onclick="share()">↗ Share</button>
-   </div>
-   <div class="comments"></div>
-  </div>
- </div>
-</section>
+    <button id="loginBtn">Login with Email</button>
+    <button id="signupBtn" class="secondary">Create New Account</button>
+    <button id="googleBtn" class="secondary">🌐 Continue with Google</button>
 
-<section id="reels" class="page">
- <div class="card">
-  <h1>🎬 Reels</h1>
-  <p class="muted">Select a video to preview and play.</p>
-  <input type="file" accept="video/*" onchange="previewReel(event)">
-  <video id="reelVideo" class="media" controls playsinline style="display:none"></video>
- </div>
-</section>
+    <p class="small"><a id="forgotBtn">Forgot Password?</a></p>
 
-<section id="discover" class="page">
- <div class="card">
-  <h1>🔎 Discover</h1>
-  <input id="searchInput" placeholder="Search people and moods..." oninput="searchPeople()">
-  <div id="people">
-   <p class="person">🌻 Meera — Creator <button onclick="follow(this)">＋ Follow</button></p>
-   <p class="person">🎨 Creative Souls <button onclick="follow(this)">＋ Follow</button></p>
-   <p class="person">🎵 Music Lovers <button onclick="follow(this)">＋ Follow</button></p>
-  </div>
- </div>
-</section>
+    <hr>
+    <p class="small">Login with your phone number</p>
+    <input id="phone" type="tel" autocomplete="tel"
+      placeholder="Phone number, e.g. +919876543210">
 
-<section id="create" class="page">
- <div class="card">
-  <h1>＋ Create Post</h1>
-  <input id="postFile" type="file" accept="image/*,video/*" onchange="previewPost(event)">
-  <div id="postPreview"></div>
-  <textarea id="caption" rows="3" placeholder="Write your caption..."></textarea>
-  <button class="full" onclick="publish()">Publish Post</button>
-  <small>Demo posts are stored only in this page session.</small>
- </div>
-</section>
+    <div id="recaptcha-container"></div>
+    <button id="otpBtn" class="secondary">Send OTP</button>
 
-<section id="chat" class="page">
- <div class="card">
-  <h1>💬 Chat</h1>
-  <p class="muted">Demo conversation</p>
-  <div id="messages"></div>
-  <input id="chatText" placeholder="Write a message..." onkeydown="if(event.key==='Enter')sendMessage()">
-  <button class="full" onclick="sendMessage()">Send Message</button>
-  <small>Online messaging needs a backend.</small>
- </div>
-</section>
+    <div id="otpArea">
+      <input id="otp" type="text" inputmode="numeric"
+        autocomplete="one-time-code" placeholder="Enter SMS OTP">
+      <button id="verifyBtn">Verify OTP</button>
+    </div>
+  </section>
 
-<section id="profile" class="page">
- <div class="card">
-  <h1>👤 My Profile</h1>
-  <div style="font-size:55px">🧑</div>
-  <p id="profileEmail">ALLMoods Member</p>
-  <button class="full" onclick="show('settings')">⚙️ Settings</button>
-  <button class="full" onclick="logout()">Log Out</button>
- </div>
-</section>
+  <section id="app">
+    <div class="welcome">
+      <div class="avatar">🎉</div>
+      <h2>Welcome to ALLMoods!</h2>
+      <p id="userInfo"></p>
+      <button id="logoutBtn">Logout</button>
+    </div>
+  </section>
 
-<section id="settings" class="page">
- <div class="card">
-  <h1>⚙️ Settings</h1>
-  <p>Ghost Mode</p>
-  <button class="full" onclick="alert('Privacy settings need backend setup.')">Privacy Options</button>
-  <button class="full" onclick="logout()">Log Out</button>
- </div>
-</section>
+  <div id="message" role="status" aria-live="polite"></div>
+</div>
 
-<nav id="bottomNav" aria-label="Main navigation">
- <button class="selected" data-page="home" onclick="show('home')"><span class="ico">⌂</span>Home</button>
- <button data-page="reels" onclick="show('reels')"><span class="ico">▷</span>Reels</button>
- <button data-page="discover" onclick="show('discover')"><span class="ico">⌕</span>Search</button>
- <button data-page="create" onclick="show('create')"><span class="ico">＋</span>Create</button>
- <button data-page="chat" onclick="show('chat')"><span class="ico">♡</span>Chat</button>
- <button data-page="profile" onclick="show('profile')"><span class="ico">☻</span>Profile</button>
-</nav>
+<script type="module">
+import { initializeApp } from
+  "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
-<script>
-let loggedIn=false;
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
+  signOut,
+  RecaptchaVerifier,
+  signInWithPhoneNumber
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
-function show(id){
- if(!loggedIn && id!=="login"){id="login"}
- document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
- const page=document.getElementById(id);
- if(page)page.classList.add("active");
- document.querySelectorAll("nav button").forEach(b=>{
-  b.classList.toggle("selected",b.dataset.page===id)
- });
- document.getElementById("bottomNav").classList.toggle("visible",loggedIn && id!=="login");
- window.scrollTo({top:0,behavior:"smooth"});
+// ALLMOODS FIREBASE CONFIG
+const firebaseConfig = {
+  apiKey: "AIzaSyAIMEmlXMTDH0NTvda3_sIS3D_KOc6Ogmk",
+  authDomain: "allmoods-621a2.firebaseapp.com",
+  projectId: "allmoods-621a2",
+  storageBucket: "allmoods-621a2.firebasestorage.app",
+  messagingSenderId: "564262205478",
+  appId: "1:564262205478:web:18cbb67b5f21f63f2d4ee7",
+  measurementId: "G-WJMFT93HTQ"
+};
+
+const firebaseApp = initializeApp(firebaseConfig);
+const auth = getAuth(firebaseApp);
+const googleProvider = new GoogleAuthProvider();
+
+const $ = id => document.getElementById(id);
+const showMessage = text => { $("message").textContent = text; };
+
+let confirmationResult = null;
+let recaptchaVerifier = null;
+let recaptchaWidgetId = null;
+
+onAuthStateChanged(auth, user => {
+  $("loginArea").style.display = user ? "none" : "block";
+  $("app").style.display = user ? "block" : "none";
+
+  $("userInfo").textContent = user
+    ? (user.displayName || user.email || user.phoneNumber || "Signed in")
+    : "";
+});
+
+try {
+  await getRedirectResult(auth);
+} catch (error) {
+  showMessage("Google login: " + error.message);
 }
 
-function login(){
- const email=document.getElementById("email").value.trim();
- const phone=document.getElementById("phone").value.trim();
- const password=document.getElementById("password").value;
- if(!email && !phone){
-  document.getElementById("authMessage").textContent="Enter email or phone number.";
-  return;
- }
- if(!password){
-  document.getElementById("authMessage").textContent="Enter your password.";
-  return;
- }
- // UI demonstration only; this does not authenticate a real account.
- loggedIn=true;
- document.getElementById("profileEmail").textContent=email || (document.getElementById("country").value+" "+phone);
- show("home");
+// EMAIL LOGIN
+$("loginBtn").addEventListener("click", async () => {
+  const email = $("email").value.trim();
+  const password = $("password").value;
+
+  if (!email || !password) {
+    showMessage("Email aur password dono bharo.");
+    return;
+  }
+
+  try {
+    showMessage("Logging in...");
+    await signInWithEmailAndPassword(auth, email, password);
+    showMessage("Login successful!");
+  } catch (error) {
+    showMessage(error.message);
+  }
+});
+
+// CREATE ACCOUNT
+$("signupBtn").addEventListener("click", async () => {
+  const email = $("email").value.trim();
+  const password = $("password").value;
+
+  if (!email || !password) {
+    showMessage("Email aur password dono bharo.");
+    return;
+  }
+
+  if (password.length < 6) {
+    showMessage("Password kam se kam 6 characters ka rakho.");
+    return;
+  }
+
+  try {
+    showMessage("Creating account...");
+    await createUserWithEmailAndPassword(auth, email, password);
+    showMessage("Account created successfully!");
+  } catch (error) {
+    showMessage(error.message);
+  }
+});
+
+// FORGOT PASSWORD
+$("forgotBtn").addEventListener("click", async () => {
+  const email = $("email").value.trim();
+
+  if (!email) {
+    showMessage("Pehle email address bharo.");
+    $("email").focus();
+    return;
+  }
+
+  try {
+    await sendPasswordResetEmail(auth, email);
+    showMessage("Agar account is email se registered hai, reset instructions bhej di gayi hain. Inbox check karo.");
+  } catch (error) {
+    showMessage(error.message);
+  }
+});
+
+// GOOGLE LOGIN
+$("googleBtn").addEventListener("click", async () => {
+  try {
+    showMessage("Google login khol rahe hain...");
+    await signInWithPopup(auth, googleProvider);
+  } catch (error) {
+    if (
+      error.code === "auth/popup-blocked" ||
+      error.code === "auth/operation-not-supported-in-this-environment"
+    ) {
+      try {
+        await signInWithRedirect(auth, googleProvider);
+      } catch (redirectError) {
+        showMessage(redirectError.message);
+      }
+    } else {
+      showMessage(error.message);
+    }
+  }
+});
+
+// PHONE OTP: reCAPTCHA
+async function setupRecaptcha() {
+  if (recaptchaVerifier) return;
+
+  recaptchaVerifier = new RecaptchaVerifier(auth, "recaptcha-container", {
+    size: "normal",
+    callback: () => {
+      showMessage("Verification complete. Send OTP dabao.");
+    },
+    "expired-callback": () => {
+      showMessage("reCAPTCHA expire ho gaya. Dobara verify karo.");
+    }
+  });
+
+  recaptchaWidgetId = await recaptchaVerifier.render();
 }
-function signup(){
- document.getElementById("authMessage").textContent=
- "Demo only: secure account creation needs Firebase Authentication.";
-}
-function googleLogin(){
- document.getElementById("authMessage").textContent=
- "Google sign-in is not connected yet. Configure Firebase to enable it.";
-}
-function forgotPassword(){
- const email=document.getElementById("email").value.trim();
- document.getElementById("authMessage").textContent=email?
- "Password reset needs Firebase email authentication setup.":
- "Enter your email address first.";
-}
-function logout(){
- loggedIn=false;
- document.getElementById("password").value="";
- show("login");
-}
-function like(btn){
- btn.textContent=btn.textContent.includes("♥")?"♡ Like":"♥ Liked";
-}
-function comment(btn){
- const box=btn.closest(".card").querySelector(".comments");
- const value=prompt("Write a comment:");
- if(value && value.trim()){
-  const p=document.createElement("p");
-  p.textContent="💬 "+value.trim();
-  box.appendChild(p);
- }
-}
-function share(){
- if(navigator.share){
-  navigator.share({title:"ALLMoods",text:"Join ALLMoods!",url:location.href}).catch(()=>{});
- }else{
-  alert("Copy and share this page link: "+location.href);
- }
-}
-function follow(btn){
- btn.textContent=btn.textContent.includes("Following")?"＋ Follow":"✓ Following";
-}
-function searchPeople(){
- const q=document.getElementById("searchInput").value.toLowerCase();
- document.querySelectorAll(".person").forEach(p=>{
-  p.style.display=p.textContent.toLowerCase().includes(q)?"block":"none";
- });
-}
-function previewReel(e){
- const f=e.target.files[0];if(!f)return;
- const v=document.getElementById("reelVideo");
- v.src=URL.createObjectURL(f);v.style.display="block";
-}
-function previewPost(e){
- const f=e.target.files[0];if(!f)return;
- const holder=document.getElementById("postPreview");
- holder.replaceChildren();
- const url=URL.createObjectURL(f);
- let el;
- if(f.type.startsWith("image/")){
-  el=document.createElement("img");
- }else if(f.type.startsWith("video/")){
-  el=document.createElement("video");el.controls=true;
- }else{return}
- el.src=url;el.className="media";
- if(el.tagName==="VIDEO")el.playsInline=true;
- holder.appendChild(el);
-}
-function publish(){
- const holder=document.getElementById("postPreview");
- const caption=document.getElementById("caption").value.trim();
- if(!holder.firstElementChild && !caption){
-  alert("Choose a photo/video or write a caption first.");return;
- }
- const card=document.createElement("div");card.className="card";
- const title=document.createElement("strong");title.textContent="✨ Your Post";
- card.appendChild(title);
- if(holder.firstElementChild){
-  const media=holder.firstElementChild.cloneNode(true);
-  card.appendChild(media);
- }
- const p=document.createElement("p");p.textContent=caption;
- card.appendChild(p);
- const actions=document.createElement("div");actions.className="actions";
- actions.innerHTML='<button>♡ Like</button><button>💬 Comment</button>';
- actions.children[0].onclick=function(){like(this)};
- actions.children[1].onclick=function(){comment(this)};
- document.getElementById("feed").prepend(card);
- document.getElementById("caption").value="";
- holder.replaceChildren();
- document.getElementById("postFile").value="";
- show("home");
-}
-function sendMessage(){
- const input=document.getElementById("chatText");
- if(!input.value.trim())return;
- const p=document.createElement("p");p.textContent="You: "+input.value.trim();
- document.getElementById("messages").appendChild(p);
- input.value="";
-}
-function changeLanguage(){
- const l=document.getElementById("language").value;
- document.getElementById("welcome").innerHTML=
- l==="hi"?"हर मूड के लिए।<br>एक खूबसूरत जगह।":
- l==="mix"?"Har mood.<br>Ek beautiful place.":
- "Every mood.<br>One beautiful place.";
-}
+
+// SEND PHONE OTP
+$("otpBtn").addEventListener("click", async () => {
+  const phone = $("phone").value.trim();
+
+  if (!/^\+[1-9]\d{7,14}$/.test(phone)) {
+    showMessage("Country code ke saath number likho, jaise +919876543210.");
+    return;
+  }
+
+  try {
+    $("otpBtn").disabled = true;
+    showMessage("Phone verification taiyar ho rahi hai...");
+
+    await setupRecaptcha();
+
+    confirmationResult = await signInWithPhoneNumber(
+      auth,
+      phone,
+      recaptchaVerifier
+    );
+
+    $("otpArea").style.display = "block";
+    showMessage("OTP bhej diya gaya hai. SMS check karo.");
+  } catch (error) {
+    showMessage("OTP nahi bhej paye: " + error.message);
+
+    if (recaptchaVerifier) {
+      try { await recaptchaVerifier.clear(); } catch {}
+      recaptchaVerifier = null;
+      recaptchaWidgetId = null;
+    }
+  } finally {
+    $("otpBtn").disabled = false;
+  }
+});
+
+// VERIFY OTP
+$("verifyBtn").addEventListener("click", async () => {
+  const code = $("otp").value.trim();
+
+  if (!confirmationResult) {
+    showMessage("Pehle Send OTP dabao.");
+    return;
+  }
+
+  if (!code) {
+    showMessage("SMS mein mila OTP enter karo.");
+    return;
+  }
+
+  try {
+    await confirmationResult.confirm(code);
+    showMessage("Phone verified! Login successful.");
+  } catch (error) {
+    showMessage("OTP verify nahi hua: " + error.message);
+  }
+});
+
+// LOGOUT
+$("logoutBtn").addEventListener("click", async () => {
+  try {
+    await signOut(auth);
+    showMessage("You have logged out.");
+  } catch (error) {
+    showMessage(error.message);
+  }
+});
 </script>
 </body>
-  </html>
-  
+</html>
