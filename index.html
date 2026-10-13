@@ -1,1 +1,304 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ALLMoods</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  color:white;
+  background:linear-gradient(135deg,#160d2d,#3c1764,#102e49);
+  min-height:100vh;
+}
+header{
+  padding:20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.logo{
+  font-size:28px;
+  font-weight:bold;
+  background:linear-gradient(90deg,#ff5bc8,#58e7ff);
+  color:transparent;
+  background-clip:text;
+}
+select,input,button{
+  padding:12px;
+  border-radius:12px;
+  border:1px solid #ffffff33;
+}
+select,input{
+  background:#21183c;
+  color:white;
+  width:100%;
+  margin:6px 0;
+}
+button{
+  background:linear-gradient(100deg,#8c62ff,#ed59cb);
+  color:white;
+  border:0;
+  cursor:pointer;
+}
+.card{
+  background:#ffffff12;
+  border:1px solid #ffffff25;
+  border-radius:22px;
+  padding:20px;
+  margin:15px;
+  backdrop-filter:blur(15px);
+}
+h1{font-size:35px}
+.page{display:none}
+.page.active{display:block}
+nav{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  display:flex;
+  justify-content:space-around;
+  background:#17112cf5;
+  padding:12px 3px;
+}
+nav button{padding:10px 7px}
+a{color:#58e7ff}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">✦ ALLMoods</div>
+  <select id="language" onchange="changeLanguage()"
+  style="width:115px">
+    <option value="en">English</option>
+    <option value="hi">हिन्दी</option>
+    <option value="mix">Hinglish</option>
+  </select>
+</header>
+
+<section id="login" class="page active">
+  <div class="card">
+    <h1 id="welcome">Every mood.<br>One beautiful place.</h1>
+    <p>Welcome to your social universe ✨</p>
+
+    <button style="width:100%" onclick="googleLogin()">
+      🌐 Continue with Google
+    </button>
+
+    <p>— OR LOGIN WITH PHONE —</p>
+
+    <select id="country">
+      <option value="+91">🇮🇳 India +91</option>
+      <option value="+1">🇺🇸 USA +1</option>
+      <option value="+44">🇬🇧 UK +44</option>
+      <option value="+971">🇦🇪 UAE +971</option>
+    </select>
+
+    <input id="phone" type="tel"
+    placeholder="Phone number">
+
+    <input id="email" type="email"
+    placeholder="Email address (optional)">
+
+    <input id="password" type="password"
+    placeholder="Password">
+
+    <button onclick="forgotPassword()"
+    style="width:100%;margin:5px 0">
+      Forgot Password?
+    </button>
+
+    <button onclick="login()" style="width:100%">
+      Login / Continue
+    </button>
+
+    <button onclick="sendOTP()"
+    style="width:100%;margin-top:8px">
+      Send Phone OTP
+    </button>
+
+    <p id="message"></p>
+    <small>Google login, real OTP and password reset
+    need authentication setup.</small>
+  </div>
+</section>
+
+<section id="home" class="page">
+  <div class="card">
+    <h1>✨ ALLMoods</h1>
+    <p>Share your mood with the world.</p>
+    <button onclick="show('create')">＋ Create Post</button>
+  </div>
+  <div class="card">
+    <h2>🌈 Your Feed</h2>
+    <p>Collect moments, not things.</p>
+    <button onclick="like(this)">♡ Like</button>
+    <button onclick="alert('Demo comment option')">💬 Comment</button>
+    <button onclick="alert('Demo share option')">↗ Share</button>
+  </div>
+</section>
+
+<section id="reels" class="page">
+  <div class="card">
+    <h1>🎬 Reels</h1>
+    <input type="file" accept="video/*"
+    onchange="previewVideo(event)">
+    <video id="video" controls
+    style="width:100%;display:none"></video>
+    <select>
+      <option>Original sound</option>
+      <option>No music</option>
+      <option>Add music (setup required)</option>
+    </select>
+  </div>
+</section>
+
+<section id="discover" class="page">
+  <div class="card">
+    <h1>🔎 Discover</h1>
+    <input placeholder="Search people and moods">
+    <p>🌻 Meera — Creator</p>
+    <button onclick="alert('Follow demo')">＋ Follow</button>
+  </div>
+</section>
+
+<section id="create" class="page">
+  <div class="card">
+    <h1>＋ Create</h1>
+    <input type="file" accept="image/*,video/*"
+    onchange="previewMedia(event)">
+    <img id="photo" style="width:100%;display:none">
+    <textarea id="caption"
+    placeholder="Write your caption..."
+    style="width:100%;margin:10px 0"></textarea>
+    <select>
+      <option>Original filter</option>
+      <option>Violet glow</option>
+      <option>Warm sunset</option>
+      <option>Black and white</option>
+    </select>
+    <button onclick="publish()">Publish Preview</button>
+  </div>
+</section>
+
+<section id="chat" class="page">
+  <div class="card">
+    <h1>💬 Chat</h1>
+    <p>🟢 Meera — Online</p>
+    <input id="chatText" placeholder="Write a message">
+    <button onclick="sendMessage()">Send</button>
+    <div id="messages"></div>
+  </div>
+</section>
+
+<section id="profile" class="page">
+  <div class="card">
+    <h1>👤 My Profile</h1>
+    <p>Welcome to ALLMoods</p>
+    <button onclick="show('settings')">⚙️ Settings</button>
+  </div>
+</section>
+
+<section id="settings" class="page">
+  <div class="card">
+    <h1>⚙️ Settings</h1>
+    <label><input type="checkbox" checked> Ghost Mode</label>
+    <p>Location sharing</p>
+    <button onclick="alert('Location sharing needs setup')">
+      Enable Location
+    </button>
+    <p>Invite friends</p>
+    <button onclick="invite()">Share Invite Link</button>
+  </div>
+</section>
+
+<nav>
+  <button onclick="show('home')">⌂<br>Home</button>
+  <button onclick="show('reels')">▷<br>Reels</button>
+  <button onclick="show('discover')">⌕<br>Search</button>
+  <button onclick="show('create')">＋<br>Create</button>
+  <button onclick="show('chat')">♡<br>Chat</button>
+  <button onclick="show('profile')">☻<br>Profile</button>
+</nav>
+
+<script>
+function show(id){
+  document.querySelectorAll('.page').forEach(p=>{
+    p.classList.remove('active');
+  });
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+function login(){
+  document.getElementById('message').textContent=
+  'Demo only: real login setup is required.';
+  show('home');
+}
+function googleLogin(){
+  alert('Google sign-in requires Firebase configuration.');
+}
+function sendOTP(){
+  if(!document.getElementById('phone').value){
+    alert('Enter phone number first.');
+    return;
+  }
+  alert('Real OTP requires Firebase Phone Authentication.');
+}
+function forgotPassword(){
+  let email=document.getElementById('email').value;
+  if(!email){
+    alert('Enter your email address first.');
+    return;
+  }
+  alert('Password reset requires email authentication setup.');
+}
+function like(btn){
+  btn.textContent=btn.textContent.includes('♥')?'♡ Like':'♥ Liked';
+}
+function previewVideo(e){
+  let v=document.getElementById('video');
+  v.src=URL.createObjectURL(e.target.files[0]);
+  v.style.display='block';
+}
+function previewMedia(e){
+  let f=e.target.files[0];
+  if(f && f.type.startsWith('image/')){
+    let img=document.getElementById('photo');
+    img.src=URL.createObjectURL(f);
+    img.style.display='block';
+  }else if(f && f.type.startsWith('video/')){
+    alert('For video preview, use the Reels tab.');
+  }
+}
+function publish(){
+  alert('Preview ready! Online publishing needs a backend.');
+}
+function sendMessage(){
+  let input=document.getElementById('chatText');
+  if(!input.value.trim())return;
+  let p=document.createElement('p');
+  p.textContent='You: '+input.value;
+  document.getElementById('messages').appendChild(p);
+  input.value='';
+}
+function invite(){
+  if(navigator.share){
+    navigator.share({title:'ALLMoods',text:'Join ALLMoods!',url:location.href});
+  }else{
+    alert('Invite link: '+location.href);
+  }
+}
+function changeLanguage(){
+  let lang=document.getElementById('language').value;
+  document.getElementById('welcome').innerHTML=
+  lang==='hi'?'हर मूड के लिए।<br>एक खूबसूरत जगह।':
+  lang==='mix'?'Har mood.<br>Ek beautiful place.':
+  'Every mood.<br>One beautiful place.';
+}
+</script>
+</body>
+  </html>
