@@ -3,302 +3,394 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ALLMoods</title>
 <style>
+:root{
+ --pink:#ff5ac8;
+ --purple:#8b5cff;
+ --cyan:#54edff;
+ --glass:rgba(255,255,255,.09);
+}
 *{box-sizing:border-box}
 body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  color:white;
-  background:linear-gradient(135deg,#160d2d,#3c1764,#102e49);
-  min-height:100vh;
+ margin:0;min-height:100vh;color:white;
+ font-family:Arial,sans-serif;
+ background:linear-gradient(135deg,#100a24,#32134e,#102e49);
+ background-attachment:fixed;
+ padding-bottom:100px;overflow-x:hidden
+}
+body:before,body:after{
+ content:"";position:fixed;width:260px;height:260px;
+ border-radius:50%;filter:blur(65px);opacity:.35;
+ pointer-events:none;z-index:-1;
+ animation:liquid 9s ease-in-out infinite alternate
+}
+body:before{background:#a02dff;top:10%;left:-100px}
+body:after{background:#ff3bb8;right:-100px;bottom:10%;animation-delay:-4s}
+@keyframes liquid{
+ 0%{transform:translate(0,0) scale(1)}
+ 50%{transform:translate(70px,45px) scale(1.25)}
+ 100%{transform:translate(-25px,80px) scale(.9)}
 }
 header{
-  padding:20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+ display:flex;align-items:center;justify-content:space-between;
+ padding:16px;position:sticky;top:0;z-index:5;
+ background:rgba(18,10,39,.58);
+ backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+ border-bottom:1px solid #ffffff18
 }
 .logo{
-  font-size:28px;
-  font-weight:bold;
-  background:linear-gradient(90deg,#ff5bc8,#58e7ff);
-  color:transparent;
-  background-clip:text;
+ font-size:25px;font-weight:900;
+ background:linear-gradient(90deg,var(--pink),var(--cyan));
+ color:transparent;background-clip:text
 }
-select,input,button{
-  padding:12px;
-  border-radius:12px;
-  border:1px solid #ffffff33;
-}
-select,input{
-  background:#21183c;
-  color:white;
-  width:100%;
-  margin:6px 0;
-}
+button,input,select,textarea{font:inherit}
 button{
-  background:linear-gradient(100deg,#8c62ff,#ed59cb);
-  color:white;
-  border:0;
-  cursor:pointer;
+ border:1px solid #ffffff18;border-radius:14px;padding:12px;
+ color:white;cursor:pointer;
+ background:linear-gradient(110deg,#8c62ff,#e951c4);
+ transition:transform .25s,filter .25s
+}
+button:active{transform:scale(.94)}
+input,select,textarea{
+ width:100%;padding:13px;margin:6px 0;
+ color:white;background:#21183c;border:1px solid #ffffff28;
+ border-radius:13px;outline:none
+}
+.page{display:none;max-width:620px;margin:auto}
+.page.active{display:block;animation:pageIn .4s ease}
+@keyframes pageIn{
+ from{opacity:0;transform:translateY(12px);filter:blur(4px)}
+ to{opacity:1;transform:translateY(0);filter:blur(0)}
 }
 .card{
-  background:#ffffff12;
-  border:1px solid #ffffff25;
-  border-radius:22px;
-  padding:20px;
-  margin:15px;
-  backdrop-filter:blur(15px);
+ margin:15px;padding:20px;border-radius:25px;
+ background:var(--glass);border:1px solid #ffffff25;
+ backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
+ box-shadow:0 12px 35px #0002
 }
-h1{font-size:35px}
-.page{display:none}
-.page.active{display:block}
+h1{font-size:30px}
+.muted{color:#c8bedb;font-size:14px}
+.full{width:100%;margin-top:8px}
+.google{background:#fff;color:#241b36}
+.media{width:100%;border-radius:16px;margin-top:10px}
+.row{display:flex;gap:8px}
+.row>*{min-width:0}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.actions button{flex:1}
+small{color:#c8bedb}
+.hidden{display:none!important}
+
+/* Animated glass bottom navigation */
 nav{
-  position:fixed;
-  bottom:0;
-  width:100%;
-  display:flex;
-  justify-content:space-around;
-  background:#17112cf5;
-  padding:12px 3px;
+ display:none;position:fixed;z-index:20;
+ bottom:calc(10px + env(safe-area-inset-bottom));
+ left:10px;right:10px;max-width:620px;margin:auto;
+ padding:8px 5px;border-radius:25px;
+ background:rgba(25,17,48,.67);
+ border:1px solid rgba(255,255,255,.23);
+ box-shadow:0 12px 40px #0005, inset 0 1px #ffffff18;
+ backdrop-filter:blur(28px) saturate(160%);
+ -webkit-backdrop-filter:blur(28px) saturate(160%);
+ justify-content:space-around;align-items:center;gap:3px
 }
-nav button{padding:10px 7px}
-a{color:#58e7ff}
+nav.visible{display:flex;animation:navIn .5s cubic-bezier(.2,.8,.2,1)}
+@keyframes navIn{
+ from{opacity:0;transform:translateY(35px) scale(.96)}
+ to{opacity:1;transform:translateY(0) scale(1)}
+}
+nav button{
+ position:relative;isolation:isolate;flex:1;min-width:0;
+ display:flex;flex-direction:column;align-items:center;
+ justify-content:center;gap:4px;padding:9px 2px;
+ border:0;background:transparent;border-radius:18px;
+ font-size:10px;color:#d5cbe9;overflow:hidden
+}
+nav button .ico{font-size:20px;line-height:1.1;transition:transform .3s}
+nav button.selected{color:white}
+nav button.selected:before{
+ content:"";position:absolute;inset:0;z-index:-1;border-radius:17px;
+ background:linear-gradient(135deg,#a16bff88,#ff59c755,#54edff35);
+ border:1px solid #ffffff28;
+ box-shadow:inset 0 1px #ffffff22,0 0 20px #a45aff20;
+ animation:glassPulse 2.8s ease-in-out infinite
+}
+nav button.selected .ico{transform:translateY(-2px) scale(1.12)}
+@keyframes glassPulse{
+ 0%,100%{filter:brightness(1)}
+ 50%{filter:brightness(1.25)}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
 </style>
 </head>
 <body>
-
 <header>
-  <div class="logo">✦ ALLMoods</div>
-  <select id="language" onchange="changeLanguage()"
-  style="width:115px">
-    <option value="en">English</option>
-    <option value="hi">हिन्दी</option>
-    <option value="mix">Hinglish</option>
-  </select>
+ <div class="logo">✦ ALLMoods</div>
+ <select id="language" style="width:112px" onchange="changeLanguage()">
+  <option value="en">English</option>
+  <option value="hi">हिन्दी</option>
+  <option value="mix">Hinglish</option>
+ </select>
 </header>
 
 <section id="login" class="page active">
-  <div class="card">
-    <h1 id="welcome">Every mood.<br>One beautiful place.</h1>
-    <p>Welcome to your social universe ✨</p>
-
-    <button style="width:100%" onclick="googleLogin()">
-      🌐 Continue with Google
-    </button>
-
-    <p>— OR LOGIN WITH PHONE —</p>
-
-    <select id="country">
-      <option value="+91">🇮🇳 India +91</option>
-      <option value="+1">🇺🇸 USA +1</option>
-      <option value="+44">🇬🇧 UK +44</option>
-      <option value="+971">🇦🇪 UAE +971</option>
-    </select>
-
-    <input id="phone" type="tel"
-    placeholder="Phone number">
-
-    <input id="email" type="email"
-    placeholder="Email address (optional)">
-
-    <input id="password" type="password"
-    placeholder="Password">
-
-    <button onclick="forgotPassword()"
-    style="width:100%;margin:5px 0">
-      Forgot Password?
-    </button>
-
-    <button onclick="login()" style="width:100%">
-      Login / Continue
-    </button>
-
-    <button onclick="sendOTP()"
-    style="width:100%;margin-top:8px">
-      Send Phone OTP
-    </button>
-
-    <p id="message"></p>
-    <small>Google login, real OTP and password reset
-    need authentication setup.</small>
+ <div class="card">
+  <h1 id="welcome">Every mood.<br>One beautiful place.</h1>
+  <p class="muted">Your world, your mood, your people ✨</p>
+  <button class="full google" onclick="googleLogin()">🌐 Continue with Google</button>
+  <p style="text-align:center">— OR CONTINUE WITH PHONE —</p>
+  <div class="row">
+   <select id="country" style="width:42%">
+    <option value="+91">🇮🇳 +91</option>
+    <option value="+1">🇺🇸 +1</option>
+    <option value="+44">🇬🇧 +44</option>
+    <option value="+971">🇦🇪 +971</option>
+   </select>
+   <input id="phone" type="tel" placeholder="Phone number">
   </div>
+  <input id="email" type="email" placeholder="Email address">
+  <input id="password" type="password" placeholder="Password">
+  <button class="full" onclick="login()">Login</button>
+  <button class="full" onclick="signup()">Create Account / Sign Up</button>
+  <button class="full" style="background:#ffffff18" onclick="forgotPassword()">Forgot Password?</button>
+  <p id="authMessage" class="muted"></p>
+  <small>Demo authentication. Real accounts require secure authentication setup.</small>
+ </div>
 </section>
 
 <section id="home" class="page">
+ <div class="card">
+  <h1>✨ Your mood, your world</h1>
+  <p class="muted">Share a little happiness today.</p>
+  <button onclick="show('create')">＋ Create Post</button>
+ </div>
+ <div id="feed">
   <div class="card">
-    <h1>✨ ALLMoods</h1>
-    <p>Share your mood with the world.</p>
-    <button onclick="show('create')">＋ Create Post</button>
-  </div>
-  <div class="card">
-    <h2>🌈 Your Feed</h2>
-    <p>Collect moments, not things.</p>
+   <strong>🌈 ALLMoods Community</strong>
+   <p>Every day is a new mood. Share yours! ✨</p>
+   <div class="actions">
     <button onclick="like(this)">♡ Like</button>
-    <button onclick="alert('Demo comment option')">💬 Comment</button>
-    <button onclick="alert('Demo share option')">↗ Share</button>
+    <button onclick="comment(this)">💬 Comment</button>
+    <button onclick="share()">↗ Share</button>
+   </div>
+   <div class="comments"></div>
   </div>
+ </div>
 </section>
 
 <section id="reels" class="page">
-  <div class="card">
-    <h1>🎬 Reels</h1>
-    <input type="file" accept="video/*"
-    onchange="previewVideo(event)">
-    <video id="video" controls
-    style="width:100%;display:none"></video>
-    <select>
-      <option>Original sound</option>
-      <option>No music</option>
-      <option>Add music (setup required)</option>
-    </select>
-  </div>
+ <div class="card">
+  <h1>🎬 Reels</h1>
+  <p class="muted">Select a video to preview and play.</p>
+  <input type="file" accept="video/*" onchange="previewReel(event)">
+  <video id="reelVideo" class="media" controls playsinline style="display:none"></video>
+ </div>
 </section>
 
 <section id="discover" class="page">
-  <div class="card">
-    <h1>🔎 Discover</h1>
-    <input placeholder="Search people and moods">
-    <p>🌻 Meera — Creator</p>
-    <button onclick="alert('Follow demo')">＋ Follow</button>
+ <div class="card">
+  <h1>🔎 Discover</h1>
+  <input id="searchInput" placeholder="Search people and moods..." oninput="searchPeople()">
+  <div id="people">
+   <p class="person">🌻 Meera — Creator <button onclick="follow(this)">＋ Follow</button></p>
+   <p class="person">🎨 Creative Souls <button onclick="follow(this)">＋ Follow</button></p>
+   <p class="person">🎵 Music Lovers <button onclick="follow(this)">＋ Follow</button></p>
   </div>
+ </div>
 </section>
 
 <section id="create" class="page">
-  <div class="card">
-    <h1>＋ Create</h1>
-    <input type="file" accept="image/*,video/*"
-    onchange="previewMedia(event)">
-    <img id="photo" style="width:100%;display:none">
-    <textarea id="caption"
-    placeholder="Write your caption..."
-    style="width:100%;margin:10px 0"></textarea>
-    <select>
-      <option>Original filter</option>
-      <option>Violet glow</option>
-      <option>Warm sunset</option>
-      <option>Black and white</option>
-    </select>
-    <button onclick="publish()">Publish Preview</button>
-  </div>
+ <div class="card">
+  <h1>＋ Create Post</h1>
+  <input id="postFile" type="file" accept="image/*,video/*" onchange="previewPost(event)">
+  <div id="postPreview"></div>
+  <textarea id="caption" rows="3" placeholder="Write your caption..."></textarea>
+  <button class="full" onclick="publish()">Publish Post</button>
+  <small>Demo posts are stored only in this page session.</small>
+ </div>
 </section>
 
 <section id="chat" class="page">
-  <div class="card">
-    <h1>💬 Chat</h1>
-    <p>🟢 Meera — Online</p>
-    <input id="chatText" placeholder="Write a message">
-    <button onclick="sendMessage()">Send</button>
-    <div id="messages"></div>
-  </div>
+ <div class="card">
+  <h1>💬 Chat</h1>
+  <p class="muted">Demo conversation</p>
+  <div id="messages"></div>
+  <input id="chatText" placeholder="Write a message..." onkeydown="if(event.key==='Enter')sendMessage()">
+  <button class="full" onclick="sendMessage()">Send Message</button>
+  <small>Online messaging needs a backend.</small>
+ </div>
 </section>
 
 <section id="profile" class="page">
-  <div class="card">
-    <h1>👤 My Profile</h1>
-    <p>Welcome to ALLMoods</p>
-    <button onclick="show('settings')">⚙️ Settings</button>
-  </div>
+ <div class="card">
+  <h1>👤 My Profile</h1>
+  <div style="font-size:55px">🧑</div>
+  <p id="profileEmail">ALLMoods Member</p>
+  <button class="full" onclick="show('settings')">⚙️ Settings</button>
+  <button class="full" onclick="logout()">Log Out</button>
+ </div>
 </section>
 
 <section id="settings" class="page">
-  <div class="card">
-    <h1>⚙️ Settings</h1>
-    <label><input type="checkbox" checked> Ghost Mode</label>
-    <p>Location sharing</p>
-    <button onclick="alert('Location sharing needs setup')">
-      Enable Location
-    </button>
-    <p>Invite friends</p>
-    <button onclick="invite()">Share Invite Link</button>
-  </div>
+ <div class="card">
+  <h1>⚙️ Settings</h1>
+  <p>Ghost Mode</p>
+  <button class="full" onclick="alert('Privacy settings need backend setup.')">Privacy Options</button>
+  <button class="full" onclick="logout()">Log Out</button>
+ </div>
 </section>
 
-<nav>
-  <button onclick="show('home')">⌂<br>Home</button>
-  <button onclick="show('reels')">▷<br>Reels</button>
-  <button onclick="show('discover')">⌕<br>Search</button>
-  <button onclick="show('create')">＋<br>Create</button>
-  <button onclick="show('chat')">♡<br>Chat</button>
-  <button onclick="show('profile')">☻<br>Profile</button>
+<nav id="bottomNav" aria-label="Main navigation">
+ <button class="selected" data-page="home" onclick="show('home')"><span class="ico">⌂</span>Home</button>
+ <button data-page="reels" onclick="show('reels')"><span class="ico">▷</span>Reels</button>
+ <button data-page="discover" onclick="show('discover')"><span class="ico">⌕</span>Search</button>
+ <button data-page="create" onclick="show('create')"><span class="ico">＋</span>Create</button>
+ <button data-page="chat" onclick="show('chat')"><span class="ico">♡</span>Chat</button>
+ <button data-page="profile" onclick="show('profile')"><span class="ico">☻</span>Profile</button>
 </nav>
 
 <script>
+let loggedIn=false;
+
 function show(id){
-  document.querySelectorAll('.page').forEach(p=>{
-    p.classList.remove('active');
-  });
-  document.getElementById(id).classList.add('active');
-  window.scrollTo(0,0);
+ if(!loggedIn && id!=="login"){id="login"}
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ const page=document.getElementById(id);
+ if(page)page.classList.add("active");
+ document.querySelectorAll("nav button").forEach(b=>{
+  b.classList.toggle("selected",b.dataset.page===id)
+ });
+ document.getElementById("bottomNav").classList.toggle("visible",loggedIn && id!=="login");
+ window.scrollTo({top:0,behavior:"smooth"});
 }
+
 function login(){
-  document.getElementById('message').textContent=
-  'Demo only: real login setup is required.';
-  show('home');
+ const email=document.getElementById("email").value.trim();
+ const phone=document.getElementById("phone").value.trim();
+ const password=document.getElementById("password").value;
+ if(!email && !phone){
+  document.getElementById("authMessage").textContent="Enter email or phone number.";
+  return;
+ }
+ if(!password){
+  document.getElementById("authMessage").textContent="Enter your password.";
+  return;
+ }
+ // UI demonstration only; this does not authenticate a real account.
+ loggedIn=true;
+ document.getElementById("profileEmail").textContent=email || (document.getElementById("country").value+" "+phone);
+ show("home");
+}
+function signup(){
+ document.getElementById("authMessage").textContent=
+ "Demo only: secure account creation needs Firebase Authentication.";
 }
 function googleLogin(){
-  alert('Google sign-in requires Firebase configuration.');
-}
-function sendOTP(){
-  if(!document.getElementById('phone').value){
-    alert('Enter phone number first.');
-    return;
-  }
-  alert('Real OTP requires Firebase Phone Authentication.');
+ document.getElementById("authMessage").textContent=
+ "Google sign-in is not connected yet. Configure Firebase to enable it.";
 }
 function forgotPassword(){
-  let email=document.getElementById('email').value;
-  if(!email){
-    alert('Enter your email address first.');
-    return;
-  }
-  alert('Password reset requires email authentication setup.');
+ const email=document.getElementById("email").value.trim();
+ document.getElementById("authMessage").textContent=email?
+ "Password reset needs Firebase email authentication setup.":
+ "Enter your email address first.";
+}
+function logout(){
+ loggedIn=false;
+ document.getElementById("password").value="";
+ show("login");
 }
 function like(btn){
-  btn.textContent=btn.textContent.includes('♥')?'♡ Like':'♥ Liked';
+ btn.textContent=btn.textContent.includes("♥")?"♡ Like":"♥ Liked";
 }
-function previewVideo(e){
-  let v=document.getElementById('video');
-  v.src=URL.createObjectURL(e.target.files[0]);
-  v.style.display='block';
+function comment(btn){
+ const box=btn.closest(".card").querySelector(".comments");
+ const value=prompt("Write a comment:");
+ if(value && value.trim()){
+  const p=document.createElement("p");
+  p.textContent="💬 "+value.trim();
+  box.appendChild(p);
+ }
 }
-function previewMedia(e){
-  let f=e.target.files[0];
-  if(f && f.type.startsWith('image/')){
-    let img=document.getElementById('photo');
-    img.src=URL.createObjectURL(f);
-    img.style.display='block';
-  }else if(f && f.type.startsWith('video/')){
-    alert('For video preview, use the Reels tab.');
-  }
+function share(){
+ if(navigator.share){
+  navigator.share({title:"ALLMoods",text:"Join ALLMoods!",url:location.href}).catch(()=>{});
+ }else{
+  alert("Copy and share this page link: "+location.href);
+ }
+}
+function follow(btn){
+ btn.textContent=btn.textContent.includes("Following")?"＋ Follow":"✓ Following";
+}
+function searchPeople(){
+ const q=document.getElementById("searchInput").value.toLowerCase();
+ document.querySelectorAll(".person").forEach(p=>{
+  p.style.display=p.textContent.toLowerCase().includes(q)?"block":"none";
+ });
+}
+function previewReel(e){
+ const f=e.target.files[0];if(!f)return;
+ const v=document.getElementById("reelVideo");
+ v.src=URL.createObjectURL(f);v.style.display="block";
+}
+function previewPost(e){
+ const f=e.target.files[0];if(!f)return;
+ const holder=document.getElementById("postPreview");
+ holder.replaceChildren();
+ const url=URL.createObjectURL(f);
+ let el;
+ if(f.type.startsWith("image/")){
+  el=document.createElement("img");
+ }else if(f.type.startsWith("video/")){
+  el=document.createElement("video");el.controls=true;
+ }else{return}
+ el.src=url;el.className="media";
+ if(el.tagName==="VIDEO")el.playsInline=true;
+ holder.appendChild(el);
 }
 function publish(){
-  alert('Preview ready! Online publishing needs a backend.');
+ const holder=document.getElementById("postPreview");
+ const caption=document.getElementById("caption").value.trim();
+ if(!holder.firstElementChild && !caption){
+  alert("Choose a photo/video or write a caption first.");return;
+ }
+ const card=document.createElement("div");card.className="card";
+ const title=document.createElement("strong");title.textContent="✨ Your Post";
+ card.appendChild(title);
+ if(holder.firstElementChild){
+  const media=holder.firstElementChild.cloneNode(true);
+  card.appendChild(media);
+ }
+ const p=document.createElement("p");p.textContent=caption;
+ card.appendChild(p);
+ const actions=document.createElement("div");actions.className="actions";
+ actions.innerHTML='<button>♡ Like</button><button>💬 Comment</button>';
+ actions.children[0].onclick=function(){like(this)};
+ actions.children[1].onclick=function(){comment(this)};
+ document.getElementById("feed").prepend(card);
+ document.getElementById("caption").value="";
+ holder.replaceChildren();
+ document.getElementById("postFile").value="";
+ show("home");
 }
 function sendMessage(){
-  let input=document.getElementById('chatText');
-  if(!input.value.trim())return;
-  let p=document.createElement('p');
-  p.textContent='You: '+input.value;
-  document.getElementById('messages').appendChild(p);
-  input.value='';
-}
-function invite(){
-  if(navigator.share){
-    navigator.share({title:'ALLMoods',text:'Join ALLMoods!',url:location.href});
-  }else{
-    alert('Invite link: '+location.href);
-  }
+ const input=document.getElementById("chatText");
+ if(!input.value.trim())return;
+ const p=document.createElement("p");p.textContent="You: "+input.value.trim();
+ document.getElementById("messages").appendChild(p);
+ input.value="";
 }
 function changeLanguage(){
-  let lang=document.getElementById('language').value;
-  document.getElementById('welcome').innerHTML=
-  lang==='hi'?'हर मूड के लिए।<br>एक खूबसूरत जगह।':
-  lang==='mix'?'Har mood.<br>Ek beautiful place.':
-  'Every mood.<br>One beautiful place.';
+ const l=document.getElementById("language").value;
+ document.getElementById("welcome").innerHTML=
+ l==="hi"?"हर मूड के लिए।<br>एक खूबसूरत जगह।":
+ l==="mix"?"Har mood.<br>Ek beautiful place.":
+ "Every mood.<br>One beautiful place.";
 }
 </script>
 </body>
   </html>
+  
