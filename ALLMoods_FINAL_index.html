@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ALLMoods</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;padding:18px;font-family:Arial,sans-serif;color:#fff;background:linear-gradient(135deg,#100820,#351052,#092b43)}.card{width:100%;max-width:430px;margin:auto;padding:25px 20px;border:1px solid #ffffff35;border-radius:28px;background:#ffffff12;backdrop-filter:blur(22px);box-shadow:0 25px 70px #0007}.logo{width:68px;height:68px;margin:auto;border-radius:21px;display:grid;place-items:center;font-size:34px;font-weight:bold;background:linear-gradient(135deg,#8b5cf6,#ec4899,#ff8a00)}h1{text-align:center}.sub{text-align:center;color:#ddd2e8}.tabs{display:flex;gap:8px}.tab{flex:1;background:#ffffff10;border:1px solid #ffffff30}.tab.active{background:linear-gradient(100deg,#8b5cf6,#ec4899)}input,select{width:100%;padding:14px;margin:6px 0;border-radius:13px;border:1px solid #ffffff35;background:#ffffff0d;color:white;outline:none;font-size:15px}select option{background:#241333;color:#fff}button{width:100%;padding:14px;margin:7px 0;border:0;border-radius:13px;color:#fff;font-weight:bold;font-size:15px;background:linear-gradient(100deg,#7c3aed,#db2777,#f97316);cursor:pointer}.secondary{background:#ffffff0d;border:1px solid #ffffff35}.phone{display:flex;gap:7px}.phone select{width:43%;font-size:12px}.phone input{width:57%}.link{text-align:right;color:#e6b3ff;font-size:13px;margin:7px 2px;cursor:pointer}.divider{text-align:center;color:#cfc2da;margin:16px 0}.hidden{display:none!important}.msg{display:none;margin-top:10px;padding:11px;border-radius:12px;background:#ffffff15;font-size:13px;line-height:1.45}.msg.show{display:block}#recaptchaLogin,#recaptchaSignup{margin:10px 0;display:flex;justify-content:center;overflow:hidden}.small{text-align:center;color:#bfb2cc;font-size:11px}
+</style>
+</head>
+<body>
+<div class="card">
+<div class="logo">A</div><h1>ALLMoods</h1><p class="sub">Your mood. Your people. Your world. ✨</p>
+<div id="loginPage">
+<div class="tabs"><button class="tab active" id="emailTab">Email Login</button><button class="tab" id="phoneTab">Phone Login</button></div>
+<div id="emailLogin">
+<input id="email" type="email" placeholder="Email address"><input id="password" type="password" placeholder="Password"><div class="link" id="forgot">Forgot Password?</div>
+<button id="loginBtn">Login</button><button class="secondary" id="googleBtn">🌐 Continue with Google</button><div class="divider">OR</div><button id="createBtn">Create Account</button>
+</div>
+<div id="phoneLogin" class="hidden">
+<div class="phone"><select id="loginCode"><option value="+91">🇮🇳 India (+91)</option><option value="+1">🇺🇸 USA (+1)</option><option value="+44">🇬🇧 UK (+44)</option><option value="+971">🇦🇪 UAE (+971)</option><option value="+977">🇳🇵 Nepal (+977)</option></select><input id="loginPhone" type="tel" inputmode="numeric" maxlength="12" placeholder="Mobile number"></div>
+<div id="recaptchaLogin"></div><button id="sendLoginOtp">Send OTP</button>
+<div id="loginOtpArea" class="hidden"><input id="loginOtp" type="text" inputmode="numeric" maxlength="6" placeholder="Enter 6-digit OTP"><button id="verifyLoginOtp">Verify OTP & Login</button></div>
+<div class="divider">OR</div><button class="secondary" id="phoneCreateBtn">Create Account with Phone</button>
+</div></div>
+<div id="signupPage" class="hidden">
+<div class="tabs"><button class="tab active" id="signupEmailTab">Email</button><button class="tab" id="signupPhoneTab">Mobile</button></div>
+<div id="signupEmail"><input id="name" placeholder="Your name"><input id="signupEmailInput" type="email" placeholder="Email address"><input id="signupPassword" type="password" placeholder="Create password"><input id="confirmPassword" type="password" placeholder="Confirm password"><button id="createEmailBtn">Create Account</button></div>
+<div id="signupPhone" class="hidden"><input id="phoneName" placeholder="Your name"><div class="phone"><select id="signupCode"><option value="+91">🇮🇳 India (+91)</option><option value="+1">🇺🇸 USA (+1)</option><option value="+44">🇬🇧 UK (+44)</option><option value="+971">🇦🇪 UAE (+971)</option><option value="+977">🇳🇵 Nepal (+977)</option></select><input id="signupPhoneInput" type="tel" inputmode="numeric" maxlength="12" placeholder="Mobile number"></div><div id="recaptchaSignup"></div><button id="sendSignupOtp">Send OTP</button><div id="signupOtpArea" class="hidden"><input id="signupOtp" type="text" inputmode="numeric" maxlength="6" placeholder="Enter 6-digit OTP"><button id="verifySignupOtp">Verify OTP & Create Account</button></div></div>
+<div class="divider">Already have an account?</div><button class="secondary" id="backBtn">← Back to Login</button></div>
+<div id="homePage" class="hidden"><h2 style="text-align:center">🎉 Welcome to ALLMoods</h2><p id="userText" style="text-align:center"></p><button id="logoutBtn">Logout</button></div>
+<div id="msg" class="msg"></div><p class="small">ALLMoods • Connect • Share • Express</p>
+</div>
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import{getAuth,GoogleAuthProvider,signInWithPopup,signInWithEmailAndPassword,createUserWithEmailAndPassword,sendPasswordResetEmail,updateProfile,signOut,onAuthStateChanged,RecaptchaVerifier,signInWithPhoneNumber}from"https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+const firebaseConfig={apiKey:"AIzaSyAIMEmlXMTDH0NTvda3_sIS3D_KOc6Ogmk",authDomain:"allmoods-621a2.firebaseapp.com",projectId:"allmoods-621a2",storageBucket:"allmoods-621a2.firebasestorage.app",messagingSenderId:"564262205478",appId:"1:564262205478:web:18cbb67b5f21f63f2d4ee7",measurementId:"G-WJMFT93HTQ"};
+const auth=getAuth(initializeApp(firebaseConfig)),provider=new GoogleAuthProvider(),$=id=>document.getElementById(id);let lv,sv,lc,sc;
+const msg=t=>{$("msg").textContent=t;$("msg").classList.add("show")},clear=()=>{$("msg").classList.remove("show")};
+onAuthStateChanged(auth,u=>{if(u){$("loginPage").classList.add("hidden");$("signupPage").classList.add("hidden");$("homePage").classList.remove("hidden");$("userText").textContent="Logged in as: "+(u.displayName||u.email||u.phoneNumber||"ALLMoods User")}else{$("loginPage").classList.remove("hidden");$("homePage").classList.add("hidden")}});
+$("emailTab").onclick=()=>{$("emailTab").classList.add("active");$("phoneTab").classList.remove("active");$("emailLogin").classList.remove("hidden");$("phoneLogin").classList.add("hidden")};
+$("phoneTab").onclick=()=>{$("phoneTab").classList.add("active");$("emailTab").classList.remove("active");$("phoneLogin").classList.remove("hidden");$("emailLogin").classList.add("hidden")};
+$("createBtn").onclick=()=>{$("loginPage").classList.add("hidden");$("signupPage").classList.remove("hidden")};
+$("phoneCreateBtn").onclick=()=>{$("loginPage").classList.add("hidden");$("signupPage").classList.remove("hidden");$("signupEmailTab").classList.remove("active");$("signupPhoneTab").classList.add("active");$("signupEmail").classList.add("hidden");$("signupPhone").classList.remove("hidden")};
+$("backBtn").onclick=()=>{$("signupPage").classList.add("hidden");$("loginPage").classList.remove("hidden")};
+$("signupEmailTab").onclick=()=>{$("signupEmailTab").classList.add("active");$("signupPhoneTab").classList.remove("active");$("signupEmail").classList.remove("hidden");$("signupPhone").classList.add("hidden")};
+$("signupPhoneTab").onclick=()=>{$("signupPhoneTab").classList.add("active");$("signupEmailTab").classList.remove("active");$("signupPhone").classList.remove("hidden");$("signupEmail").classList.add("hidden")};
+$("loginBtn").onclick=async()=>{let e=$("email").value.trim(),p=$("password").value;if(!e||!p)return msg("Email aur password enter karo.");try{await signInWithEmailAndPassword(auth,e,p)}catch(x){msg("Login failed: "+x.message)}};
+$("createEmailBtn").onclick=async()=>{let n=$("name").value.trim(),e=$("signupEmailInput").value.trim(),p=$("signupPassword").value,c=$("confirmPassword").value;if(!n||!e||!p||!c)return msg("Sabhi fields fill karo.");if(p.length<6)return msg("Password minimum 6 characters ka hona chahiye.");if(p!==c)return msg("Password match nahi kar raha.");try{let r=await createUserWithEmailAndPassword(auth,e,p);await updateProfile(r.user,{displayName:n})}catch(x){msg("Account error: "+x.message)}};
+$("googleBtn").onclick=async()=>{try{await signInWithPopup(auth,provider)}catch(x){msg("Google Login error: "+x.message)}};
+$("forgot").onclick=async()=>{let e=$("email").value.trim();if(!e)return msg("Pehle email address enter karo.");try{await sendPasswordResetEmail(auth,e);msg("Password reset email bhej diya gaya hai.")}catch(x){msg("Reset error: "+x.message)}};
+async function loginRecaptcha(){if(!lv){lv=new RecaptchaVerifier(auth,"recaptchaLogin",{size:"normal"});await lv.render()}}
+$("sendLoginOtp").onclick=async()=>{let n=$("loginPhone").value.replace(/\D/g,"");if(n.length<6)return msg("Sahi mobile number enter karo.");try{await loginRecaptcha();lc=await signInWithPhoneNumber(auth,$("loginCode").value+n,lv);$("loginOtpArea").classList.remove("hidden");msg("OTP bhej diya gaya hai.")}catch(x){msg("OTP error: "+x.message)}};
+$("verifyLoginOtp").onclick=async()=>{let c=$("loginOtp").value.trim();if(!lc)return msg("Pehle Send OTP dabao.");try{await lc.confirm(c)}catch(x){msg("OTP verification failed: "+x.message)}};
+async function signupRecaptcha(){if(!sv){sv=new RecaptchaVerifier(auth,"recaptchaSignup",{size:"normal"});await sv.render()}}
+$("sendSignupOtp").onclick=async()=>{let n=$("phoneName").value.trim(),p=$("signupPhoneInput").value.replace(/\D/g,"");if(!n||p.length<6)return msg("Name aur mobile number enter karo.");try{await signupRecaptcha();sc=await signInWithPhoneNumber(auth,$("signupCode").value+p,sv);$("signupOtpArea").classList.remove("hidden");msg("OTP bhej diya gaya hai.")}catch(x){msg("OTP error: "+x.message)}};
+$("verifySignupOtp").onclick=async()=>{let c=$("signupOtp").value.trim();if(!sc)return msg("Pehle Send OTP dabao.");try{let r=await sc.confirm(c);await updateProfile(r.user,{displayName:$("phoneName").value.trim()})}catch(x){msg("Account creation failed: "+x.message)}};
+$("logoutBtn").onclick=()=>signOut(auth);
+</script>
+</body>
+</html>
